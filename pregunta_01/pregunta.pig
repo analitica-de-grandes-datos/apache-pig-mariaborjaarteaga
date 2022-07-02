@@ -13,10 +13,7 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 --Carga de datos
-lines = LOAD 'data.tsv' AS (letra:chararray, fecha:chararray, total:int);
+lines = LOAD 'data.tsv' AS (letra:chararray, fecha:chararray, valor:int);
 
-lines_g = GROUP lines BY letra;
-
-lines_c = FOREACH lines_g GENERATE group, COUNT(lines);
-
-STORE lines_c INTO 'output' using PigStorage(',');
+resultado = ORDER lines BY letra,valor asc;
+STORE resultado INTO 'output' using PigStorage(',');
