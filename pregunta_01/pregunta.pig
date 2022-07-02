@@ -20,3 +20,5 @@ lines_g=GROUP lines BY letra;
 
 -- contar
 lines_c=FOREACH lines_g GENERATE group, COUNT(lines);
+
+STORE lines_c INTO 'output/' using PigStorage(',');
