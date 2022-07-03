@@ -25,6 +25,6 @@ $ pig -x local -f pregunta.pig
 lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, valor:int);
 
 resultado1 = FOREACH lines GENERATE color;
-resultado = FILTER resultado1 BY (SUBSTRING(color,0,1 )>= 'c');
+resultado = FILTER resultado1 BY (SUBSTRING(color,0,1 ) == 'b');
 
 STORE resultado INTO 'output' using PigStorage(',');
