@@ -17,10 +17,8 @@ lines = LOAD 'data.tsv' AS (letra:chararray, fecha:chararray, valor:int);
 
 resultado1 = FOREACH lines GENERATE letra;
 resultado2 = GROUP resultado1 BY letra;
-resultado = FOREACH resultado2  GENERATE letra, COUNT(resultado1);
-
-
-
+resultado3 = ORDER resultado2 BY letra asc;
+resultado = FOREACH resultado3  GENERATE letra, COUNT(resultado1);
 
 
 STORE resultado INTO 'output' using PigStorage(',');
