@@ -15,6 +15,12 @@ $ pig -x local -f pregunta.pig
 --Carga de datos
 lines = LOAD 'data.tsv' AS (letra:chararray, fecha:chararray, valor:int);
 
-resultado1 = ORDER lines BY letra,valor asc;
-resultado = FOREACH resultado1 GENERATE letra,valor;
+resultado1 = FOREACH lines GENERATE letra;
+resultado2 = GROUP resultado1 BY letra;
+resultado = FOREACH resultado2  GENERATE letra, COUNT(resultado1);
+
+
+
+
+
 STORE resultado INTO 'output' using PigStorage(',');
