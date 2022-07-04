@@ -26,6 +26,6 @@ $ pig -x local -f pregunta.pig
 lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, valor:int);
 
 resultado1 = FOREACH lines GENERATE fecha, SUBSTRING(fecha,0,3),SUBSTRING(fecha,2,3);
-resultado = LIMIT resultado1 5;
+
 
 STORE resultado INTO 'output' using PigStorage(',');

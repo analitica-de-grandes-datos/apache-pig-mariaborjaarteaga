@@ -21,8 +21,10 @@ $ pig -x local -f pregunta.pig
 */
 
 
+
+
 lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, valor:int);
 
-resultado = FOREACH lines GENERATE nombre , INDEXOF(nombre,'a',1);
+resultado = FOREACH lines GENERATE INDEXOF(nombre,'a',1);
 
 STORE resultado INTO 'output' using PigStorage(',');
