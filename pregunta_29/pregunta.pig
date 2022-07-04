@@ -34,3 +34,9 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, valor:int);
+
+resultado1 = FOREACH lines GENERATE fecha;
+resultado = FOREACH resultado1 GENERATE fecha, GetMonth(fecha),GetDay(fecha),GetDay(fecha);
+
+STORE resultado INTO 'output' using PigStorage(',');
