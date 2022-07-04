@@ -24,7 +24,6 @@ $ pig -x local -f pregunta.pig
 lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, valor:int);
 
 resultado1 = FOREACH lines GENERATE nombre,color;
-resultado2 = FILTER resultado1 BY (color != 'blue');
-resultado = FILTER resultado2 BY (color != 'black');
+resultado = FILTER resultado1 BY color not in ('blue','black');
 
 STORE resultado INTO 'output' using PigStorage(',');
