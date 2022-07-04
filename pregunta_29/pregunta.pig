@@ -36,7 +36,7 @@ $ pig -x local -f pregunta.pig
 
 lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, valor:int);
 
-resultado1 = FOREACH lines GENERATE fecha;
-resultado = FOREACH resultado1 GENERATE fecha, GetMonth(fecha),GetDay(fecha),GetDay(fecha);
+
+resultado = FOREACH lines GENERATE fecha, ToDate(fecha,'MMM'), SUBSTRING(fecha,5,6), GetMonth(ToDate(fecha,'yyyy/MM/dd'));
 
 STORE resultado INTO 'output' using PigStorage(',');
