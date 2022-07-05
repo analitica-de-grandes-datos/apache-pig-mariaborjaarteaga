@@ -27,3 +27,9 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, valor:int);
+
+resultado1 = FOREACH lines GENERATE apellido;
+resultado = FILTER resultado1 BY (SUBSTRING(apellido,0,1 )>= 'D') AND (SUBSTRING(apellido,0,1 )<= 'K');
+
+STORE resultado INTO 'output' using PigStorage(',');

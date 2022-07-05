@@ -20,3 +20,9 @@ $ pig -x local -f pregunta.pig
 */
 
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, valor:int);
+
+resultado1 = FOREACH lines GENERATE fecha;
+resultado = FOREACH lines GENERATE SUBSTRING(fecha,5,7);
+
+STORE resultado INTO 'output' using PigStorage(',');

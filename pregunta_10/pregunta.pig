@@ -21,3 +21,12 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+
+
+lines = LOAD 'data.csv' USING PigStorage(',')  AS (id:int,firstname:CHARARRAY,  surname:CHARARRAY,  birthday:CHARARRAY,  color:CHARARRAY, quantity:INT);
+
+z = FOREACH lines GENERATE $2, SIZE($2);
+y = ORDER z BY $1 DESC, $0 ASC;
+resultado = LIMIT y 5;
+
+STORE resultado into 'output' USING PigStorage(',');
