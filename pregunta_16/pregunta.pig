@@ -22,9 +22,9 @@ $ pig -x local -f pregunta.pig
 */
 
 
-lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, valor:int);
+lines = LOAD 'data.csv' USING PigStorage(',') AS ( A: int,  B:chararray,  C:chararray,  D:chararray,  E:chararray,  F:chararray ); 
+ 
+conjunto = FOREACH lines GENERATE B, E; 
+resultado = FILTER conjunto BY (B MATCHES '.*^[kK].*') OR (E == 'blue'); 
 
-resultado1 = FOREACH lines GENERATE nombre,color;
-resultado = FILTER resultado1 BY (SUBSTRING(nombre,0,0) =='K') OR (color == 'blue');
-
-STORE resultado INTO 'output' using PigStorage(',');
+STORE resultado INTO 'output' USING PigStorage(',');
