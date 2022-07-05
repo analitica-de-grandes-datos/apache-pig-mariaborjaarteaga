@@ -12,12 +12,12 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-lines = LOAD 'data.tsv' using PigStorage('\t') AS (letra:chararray, dic:chararray, lista:chararray);
+lines = LOAD 'data.tsv' using PigStorage('\t') AS (letra:chararray,dic:chararray,lista:chararray);
 
-resultado1 = FOREACH lines GENERATE dic;
-letras = FOREACH resultado1  GENERATE FLATTEN(TOKENIZE(dic)) AS letra;
-grouped = GROUP letras BY letra;
+resultado1 = FOREACH lines GENERATE FLATTEN(TOKENIZE(dic)) AS pa;
+resultado2 = GROUP resultado1 by pa;
+resultado3 = FOREACH resultado2 GENERATE group,COUNT(resultado1);
+resultado = LIMIT resultado3 7;
 
-wordcount = FOREACH grouped GENERATE group, COUNT(letras);
 
-STORE resultado INTO 'output' using PigStorage(',');
+STORE resultado INTO 'output' USING PigStorage(',');
