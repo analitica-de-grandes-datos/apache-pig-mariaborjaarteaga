@@ -12,7 +12,7 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-lines = LOAD 'data.tsv' AS (letra:chararray, dic:chararray, lista:chararray);
+lines = LOAD 'data.tsv' using PigStorage('\t') AS (letra:chararray, dic:chararray, lista:chararray);
 
 resultado1 = FOREACH lines GENERATE dic;
 letras = FOREACH resultado1  GENERATE FLATTEN(TOKENIZE(dic)) AS letra;
